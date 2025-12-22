@@ -1,0 +1,20 @@
+volatile — Intermediate Explanation
+
+The volatile keyword tells the compiler that the value of a variable can change at any time outside the program’s normal flow.
+Therefore, the compiler must not optimize away reads or writes to that variable and must always access it directly from memory.
+
+This is necessary in situations where the variable may be modified by hardware, interrupt service routines, or another execution context.
+Without volatile, the compiler may cache the value in a register or remove repeated accesses, leading to incorrect behavior.
+
+volatile ensures visibility of changes, but it does not provide atomicity, synchronization, or thread safety.
+It only controls compiler optimizations, not CPU-level reordering or mutual exclusion.
+
+Simple example
+volatile int flag = 0;
+
+while (flag == 0) {
+    // wait
+}
+
+
+Here, volatile forces the compiler to re-read flag from memory every time.
