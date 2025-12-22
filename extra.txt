@@ -18,3 +18,38 @@ while (flag == 0) {
 
 
 Here, volatile forces the compiler to re-read flag from memory every time.
+
+
+inline — Intermediate Explanation
+
+The inline keyword is a request to the compiler to replace a function call with the function’s body at the call site.
+By doing this, the overhead of function calls (stack setup, jumps, returns) can be avoided, which may improve performance for small, frequently called functions.
+
+inline is not a command—the compiler may ignore it if inlining is not beneficial (e.g., the function is large or recursive).
+Inlining can also enable further optimizations like constant folding and dead-code elimination.
+
+Using inline does not change program behavior, only how the compiler generates code.
+Overusing inline can increase binary size, which may negatively impact performance.
+
+Simple example
+inline int max(int a, int b) {
+    return (a > b) ? a : b;
+}
+
+
+The compiler may replace:
+
+x = max(3, 5);
+
+
+with:
+
+x = (3 > 5) ? 3 : 5;
+
+Common pattern (static inline)
+static inline int square(int x) {
+    return x * x;
+}
+
+
+Used heavily in headers to avoid multiple-definition issues.
